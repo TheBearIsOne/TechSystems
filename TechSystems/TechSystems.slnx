@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/ReportsViewer/">
+    <Project Path="ReportsViewer/ReportsViewer.ApiService/ReportsViewer.ApiService.csproj" />
+    <Project Path="ReportsViewer/ReportsViewer.AppHost/ReportsViewer.AppHost.csproj" />
+    <Project Path="ReportsViewer/ReportsViewer.ServiceDefaults/ReportsViewer.ServiceDefaults.csproj" />
+    <Project Path="ReportsViewer/ReportsViewer.Tests/ReportsViewer.Tests.csproj" />
+    <Project Path="ReportsViewer/ReportsViewer.Web/ReportsViewer.Web.csproj" />
+  </Folder>
+  <Folder Name="/Описание решения/">
+    <File Path="../.gitignore" />
+    <File Path="../TechStack.md" />
+    <File Path="README.md" />
+    <File Path="TechServices.md" />
+  </Folder>
+</Solution>
