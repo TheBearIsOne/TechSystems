@@ -3,11 +3,13 @@
 
 - **KeyCloak** - Аутентификация и авторизация
 - **Redis** - Кэширование
-- **Kafka** - Очереди сообщений
+- **Apache Kafka** - Очереди сообщений
 - **ELK (Elasticsearch, Logstash, Kibana)** - Логирование и мониторинг
   - Elasticsearch
   - Logstash
   - Kibana
+- **ETL**
+  - Apache Spark+Airflow
 - **iText** - Генерация PDF
 - **EntityFramework** - ORM
 - **Dapper** - Лёгкий ORM
