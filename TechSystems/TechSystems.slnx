@@ -1,4 +1,20 @@
 <Solution>
+  <Folder Name="/DataService/">
+    <File Path="DataService.sql" />
+    <File Path="DataService/docker-compose.yml" />
+    <File Path="DataService/Dockerfile" />
+    <File Path="DataService/keycloak-realm.json" />
+    <File Path="DataService/logstash.conf" />
+    <File Path="DataService/otel-collector-config.yaml" />
+    <File Path="DataService/prometheus.yml" />
+    <File Path="DataService/README.md" />
+    <Project Path="DataService/DataService.Api/DataService.Api.csproj" />
+    <Project Path="DataService/DataService.Application/DataService.Application.csproj" />
+    <Project Path="DataService/DataService.Domain/DataService.Domain.csproj" />
+    <Project Path="DataService/DataService.Infrastructure/DataService.Infrastructure.csproj" />
+    <Project Path="DataService/DataService.IntegrationTests/DataService.IntegrationTests.csproj" />
+    <Project Path="DataService/DataService.Tests/DataService.Tests.csproj" />
+  </Folder>
   <Folder Name="/ReportsViewer/">
     <Project Path="ReportsViewer/ReportsViewer.ApiService/ReportsViewer.ApiService.csproj" />
     <Project Path="ReportsViewer/ReportsViewer.AppHost/ReportsViewer.AppHost.csproj" />
