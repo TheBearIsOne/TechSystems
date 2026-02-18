@@ -4,7 +4,6 @@ using DataService.Application;
 using DataService.Infrastructure;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Diagnostics;
@@ -14,9 +13,6 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using System.Diagnostics;
-using System.Security.Claims;
-using System.Threading.RateLimiting;
 
 namespace DataService.Api;
 
@@ -38,7 +34,7 @@ public class Program
             options.IncludeScopes = true;
             options.ParseStateValues = true;
             options.IncludeFormattedMessage = true;
-            //options.AddOtlpExporter();
+            options.AddOtlpExporter("DataServiceOLTP", configure => configure.Endpoint = new Uri("http://localhost:4317"));
         });
 
         builder.Services.AddProblemDetails(options =>
@@ -82,7 +78,6 @@ public class Program
                             Type = ReferenceType.SecurityScheme,
                             Id = "Bearer"
                         }
-                        
                     },
                     Array.Empty<string>()
                 }
@@ -169,8 +164,8 @@ public class Program
             .WithMetrics(metrics =>
             {
                 metrics.AddAspNetCoreInstrumentation();
-                //metrics.AddRuntimeInstrumentation();
-                //metrics.AddProcessInstrumentation();
+                metrics.AddRuntimeInstrumentation();
+                metrics.AddProcessInstrumentation();
                 metrics.AddPrometheusExporter();
             });
 
@@ -196,11 +191,12 @@ public class Program
         app.MapControllers();
         app.MapHealthChecks("/health");
         app.MapPrometheusScrapingEndpoint("/metrics");
-
+        
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+            app.MapGet("/", () => Results.Redirect("/swagger"));
         }
 
         await app.RunAsync();

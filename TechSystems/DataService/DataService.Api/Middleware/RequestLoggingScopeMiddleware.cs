@@ -1,23 +1,36 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace DataService.Api.Middleware;
 
-public sealed class RequestLoggingScopeMiddleware(ILogger<RequestLoggingScopeMiddleware> logger)
+public sealed class RequestLoggingScopeMiddleware
 {
-    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    private readonly RequestDelegate _next;
+    private readonly ILogger<RequestLoggingScopeMiddleware> _logger;
+
+    public RequestLoggingScopeMiddleware(
+        RequestDelegate next,
+        ILogger<RequestLoggingScopeMiddleware> logger)
+    {
+        _next = next;
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
     {
         var traceId = Activity.Current?.TraceId.ToString() ?? context.TraceIdentifier;
         var username = context.User.FindFirst("preferred_username")?.Value
                        ?? context.User.Identity?.Name
                        ?? "anonymous";
 
-        using (logger.BeginScope(new Dictionary<string, object>
+        using (_logger.BeginScope(new Dictionary<string, object>
         {
             ["traceId"] = traceId,
             ["username"] = username
         }))
         {
-            await next(context);
+            await _next(context);
         }
     }
 }
